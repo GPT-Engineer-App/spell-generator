@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Box, Button, Container, Heading, Text, VStack, useToast } from "@chakra-ui/react";
+import { Box, Button, Container, Heading, Input, Text, VStack, useToast } from "@chakra-ui/react";
 import { FaMagic } from "react-icons/fa";
 
 // Mock function to generate a random spell
-const generateRandomSpell = () => {
+const generateRandomSpell = (ingredient) => {
+  ingredient = ingredient.trim().length === 0 ? "Mysterious" : ingredient;
   const spellTypes = ["Fire", "Ice", "Wind", "Earth", "Lightning", "Water"];
   const spellModifiers = ["Blast", "Wave", "Bolt", "Shield", "Storm", "Beam"];
   const powerLevels = ["Minor", "Major", "Epic", "Legendary"];
@@ -17,10 +18,11 @@ const generateRandomSpell = () => {
 
 const Index = () => {
   const [spell, setSpell] = useState("");
+  const [ingredient, setIngredient] = useState("");
   const toast = useToast();
 
   const handleGenerateSpell = () => {
-    const newSpell = generateRandomSpell();
+    const newSpell = generateRandomSpell(ingredient);
     setSpell(newSpell);
     toast({
       title: "New Spell Created",
@@ -29,6 +31,7 @@ const Index = () => {
       duration: 3000,
       isClosable: true,
     });
+    setIngredient("");
   };
 
   return (
@@ -37,14 +40,12 @@ const Index = () => {
         <Heading as="h1" size="2xl" textAlign="center">
           Spell Generator <FaMagic />
         </Heading>
-        <Box p={4} borderWidth="1px" borderRadius="lg" boxShadow="base">
-          <Text fontSize="xl" fontWeight="bold" mb={2} textAlign="center">
-            Your Random Spell
-          </Text>
+        <Box p={4} borderWidth="1px" borderRadius="lg" boxShadow="base" mb={4}>
+          <Input placeholder="Enter an ingredient" value={ingredient} onChange={(event) => setIngredient(event.target.value)} mb={4} />
           <Text fontSize="lg" mb={4} textAlign="center">
             {spell || "Click the button to generate a spell!"}
           </Text>
-          <Button leftIcon={<FaMagic />} colorScheme="purple" size="lg" onClick={handleGenerateSpell}>
+          <Button leftIcon={<FaMagic />} colorScheme="purple" size="lg" onClick={handleGenerateSpell} isDisabled={!ingredient}>
             Generate Spell
           </Button>
         </Box>
