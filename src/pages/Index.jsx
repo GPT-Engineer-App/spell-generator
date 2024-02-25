@@ -3,8 +3,8 @@ import { Box, Button, Container, Heading, Input, Text, VStack, useToast } from "
 import { FaMagic } from "react-icons/fa";
 
 // Mock function to generate a random spell
-const generateRandomSpell = (ingredient) => {
-  ingredient = ingredient.trim().length === 0 ? "Mysterious" : ingredient;
+const generateRandomSpell = (ingredientInput) => {
+  const ingredient = ingredientInput.trim().length === 0 ? "Mysterious" : ingredientInput;
   const spellTypes = ["Fire", "Ice", "Wind", "Earth", "Lightning", "Water"];
   const spellModifiers = ["Blast", "Wave", "Bolt", "Shield", "Storm", "Beam"];
   const powerLevels = ["Minor", "Major", "Epic", "Legendary"];
@@ -13,7 +13,7 @@ const generateRandomSpell = (ingredient) => {
   const randomModifier = spellModifiers[Math.floor(Math.random() * spellModifiers.length)];
   const randomPower = powerLevels[Math.floor(Math.random() * powerLevels.length)];
 
-  return `${randomPower} ${randomType} ${randomModifier}`;
+  return `${ingredient} ${randomPower} ${randomType} ${randomModifier} Spell`;
 };
 
 const Index = () => {
